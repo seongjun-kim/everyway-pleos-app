@@ -66,7 +66,7 @@ fun TodayScreen(ui: UiModel, c: AppController) {
                     }
                     if (facts.isNotEmpty()) Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) { facts.forEach { Pill(it, Tone.Warm) } }
                     FadeScroll(Modifier.weight(1f, fill = false), bg = C.Surface, spacing = 12.dp) {
-                        Alternative.entries.sortedBy { if (it == Alternative.SELF) 0 else 1 }.forEach { alt ->
+                        Alternative.entries.filter { it != Alternative.DEMAND_BUS || rows[it] != null }.sortedBy { if (it == Alternative.SELF) 0 else 1 }.forEach { alt ->
                             RadioRow(alt.label, selected = pick == alt, onClick = { pick = alt }, sub = rows[alt],
                                 onInfo = if (alt == Alternative.DEMAND_BUS) ({ guide = true }) else null)
                         }
@@ -97,7 +97,7 @@ fun TodayScreen(ui: UiModel, c: AppController) {
             Txt("셔클이 뭐예요?", T.Title)
             Column(verticalArrangement = Arrangement.spacedBy(14.dp)) {
                 Txt("부르면 가까운 정류장으로 오는 수요응답 버스예요.", T.Body)
-                Txt("앱이나 전화로 부를 수 있고, 지역마다 운영 여부·이름·요금이 달라요.", T.Body, color = C.Dim)
+                Txt("운영하는 지역 안에서만 나오고, 지역마다 이름·요금이 달라요.", T.Body, color = C.Dim)
             }
             PrimaryButton("확인", { guide = false }, Modifier.fillMaxWidth())
         }

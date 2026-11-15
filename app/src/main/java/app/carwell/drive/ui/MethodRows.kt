@@ -29,9 +29,10 @@ internal object MethodRows {
             val m = TransitFare.transitMinutes(baseMin)
             line(TransitFare.minutesLabel(m), "약 ${won(TransitFare.transitWon(km, destRegion))}", faster(m))
         } else null
-        val drt = if (baseMin != null && destRegion != null) {
-            val m = TransitFare.drtMinutes(baseMin)
-            line(TransitFare.minutesLabel(m), "약 ${won(TransitFare.drtWon(destRegion))}", faster(m))
+        // 셔클은 운영 지역 안(출발·도착이 같은 지역)에서만 나온다. 호출 대기·합승 우회가 있어 오늘 자동차 예상 시간을 기준으로 하고, 더 빠르다고 말하지 않는다.
+        val inZone = ShucleZones.sameZone(est?.originLat, est?.originLon, lat, lon) != null
+        val drt = if (inZone && driveMin != null && destRegion != null) {
+            line(TransitFare.minutesLabel(TransitFare.drtMinutes(driveMin)), "약 ${won(TransitFare.drtWon(destRegion))}")
         } else null
         val taxi = line(
             driveMin?.let { "약 ${Dur.label(it)}" },

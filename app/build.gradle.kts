@@ -9,7 +9,7 @@ plugins {
 // 이름이 확정되면 아래 두 변수와 res/values/strings.xml 의 app_name 만 바꾸면 된다.
 // (소스 패키지명 app.carwell.drive 는 namespace 로 고정, 바꿀 필요 없음)
 val appId = "app.everyway.drive"    // 임시 applicationId
-val apkBaseName = "team_app"         // 임시 산출물 파일명: <apkBaseName>_release.apk
+val apkBaseName = "김성준_에브리웨이"       // 임시 산출물 파일명: <apkBaseName>_release.apk
 // ───────────────────────────────────────────────────────────────
 
 android {

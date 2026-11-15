@@ -22,7 +22,7 @@ object DemoData {
     private val OFFICE = Spot("사무실", 18.0, 37.4961, 127.2198)
     private val GOLF = Spot("골프연습장", 13.0, 37.3964, 127.2109)
     private val CHURCH = Spot("교회", 9.0, 37.3565, 127.1355)
-    private val MART = Spot("마트", 5.0, 37.3788, 127.0792)
+    private val MART = Spot("판교 마트", 3.0, 37.3935, 127.1090)
     private val RESTAURANT = Spot("솔밭한정식", 11.0, 37.3856, 127.0009)   // 가장 최근 행선지(식당 예시)
     private val TRAIL = Spot("둘레길 주차장", 15.0, 37.4668, 126.9768)
     private val HOMETOWN = Spot("시골 본가", 46.0, 37.2469, 127.4562)
