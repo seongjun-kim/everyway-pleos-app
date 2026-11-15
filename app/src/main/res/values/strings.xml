@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 서비스명 확정 전 임시 이름. 이름 바꿀 때 여기와 build.gradle.kts 의 appId 만 수정 -->
+    <string name="app_name">에브리웨이 (임시)</string>
+</resources>
