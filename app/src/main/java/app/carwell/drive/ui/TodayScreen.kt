@@ -62,7 +62,7 @@ fun TodayScreen(ui: UiModel, c: AppController) {
                     val rows = MethodRows.of(est, t, place.lat, place.lon, ui.nowMs, zone, band, night)
                     Column {
                         Txt("오늘은 어떻게 갈까요?", T.Title)
-                        Txt(place.name + (t?.let { " · 평소 ${RouteInfo.kmLabel(it.km)} · ${it.min}분" } ?: ""), T.Sub, maxLines = 2)
+                        Txt(place.name + (t?.let { " · 평소 ${RouteInfo.kmLabel(it.km)} · ${Dur.label(it.min)}" } ?: ""), T.Sub, maxLines = 2)
                     }
                     if (facts.isNotEmpty()) Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) { facts.forEach { Pill(it, Tone.Warm) } }
                     FadeScroll(Modifier.weight(1f, fill = false), bg = C.Surface, spacing = 12.dp) {

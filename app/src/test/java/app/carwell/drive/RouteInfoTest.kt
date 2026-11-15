@@ -55,6 +55,6 @@ class RouteInfoTest {
 
     @Test fun 장거리는_요금을_빼고_보여_준다() {
         val line = RouteInfo.infoLine(Alternative.TAXI, RouteInfo.Typical(48.0, 82, 5))!!
-        assertTrue(line, line.contains("평소 48km·82분") && !line.contains("요금표") && line.contains("02-120 → 6번"))
+        assertTrue(line, line.contains("평소 48km·1시간 22분") && !line.contains("요금표") && line.contains("02-120 → 6번"))
     }
 }

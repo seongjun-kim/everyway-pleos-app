@@ -56,7 +56,7 @@ object RouteInfo {
 
     /** 고른 방법 아래에 보여 줄 한 줄. 알려 줄 게 없으면 null. */
     fun infoLine(alt: Alternative, typical: Typical?): String? {
-        val route = typical?.let { "평소 ${kmLabel(it.km)}·${it.min}분" }
+        val route = typical?.let { "평소 ${kmLabel(it.km)}·${Dur.label(it.min)}" }
         return when (alt) {
             Alternative.TAXI -> listOfNotNull(
                 route,

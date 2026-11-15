@@ -62,7 +62,7 @@ object DemoData {
                     else -> (if (recent) NEAR_DAY_RECENT else NEAR_DAY_BASE)[daySeen++ % (if (recent) NEAR_DAY_RECENT else NEAR_DAY_BASE).size]
                 }
                 val km = spot.km + (i % 3 - 1) * 0.4
-                val min = (km * 1.3).toInt() + 4
+                val min = (km * 1.1).toInt() + 4
                 val end = start.plusMinutes(min.toLong())
                 val dest = spot.name
                 val signals = 2 + (i % 5)

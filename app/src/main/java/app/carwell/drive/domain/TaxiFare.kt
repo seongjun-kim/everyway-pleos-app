@@ -94,7 +94,7 @@ object TransitFare {
     /** DRT 어림(분): 우회·합승 ×1.4 + 호출 대기 10분. */
     fun drtMinutes(driveMin: Int): Int = (driveMin * 1.4 + 10).toInt()
 
-    fun minutesLabel(min: Int): String = if (min < 60) "약 ${min}분" else "약 ${min / 60}시간" + (if (min % 60 >= 5) " ${min % 60}분" else "")
+    fun minutesLabel(min: Int): String = "약 ${Dur.label(min)}"
 }
 
 

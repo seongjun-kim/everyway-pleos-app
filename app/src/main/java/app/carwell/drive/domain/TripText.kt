@@ -2,11 +2,23 @@ package app.carwell.drive.domain
 
 import java.util.Locale
 
+/** 모든 시간 표시의 공통 형식: 60분 이상은 "1시간 6분"처럼 조합한다. */
+object Dur {
+    fun label(min: Int): String {
+        val m = min.coerceAtLeast(0)
+        return when {
+            m < 60 -> "${m}분"
+            m % 60 == 0 -> "${m / 60}시간"
+            else -> "${m / 60}시간 ${m % 60}분"
+        }
+    }
+}
+
 /** 주차 직후 보여 주는 한 줄. 사실만 적고 평가하지 않는다. */
 object TripText {
     fun km(km: Double): String = String.format(Locale.US, "%.1f", km)
 
-    private fun duration(trip: Trip) = if (trip.durationMin < 1) "1분 미만" else "${trip.durationMin}분"
+    private fun duration(trip: Trip) = if (trip.durationMin < 1) "1분 미만" else Dur.label(trip.durationMin)
 
     fun summaryLine(trip: Trip): String {
         val dest = trip.destination?.takeIf { it.isNotBlank() }

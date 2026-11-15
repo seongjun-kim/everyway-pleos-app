@@ -42,13 +42,13 @@ data class TripEstimate(
 object TodayCompare {
     /** 직접 운전 아래 한 줄: 오늘 내비 예상 시간, 평소와 차이, 서행이 많을 때만 그 사실. */
     fun selfLine(est: TripEstimate, usual: RouteInfo.Typical?): String = listOfNotNull(
-        "오늘 ${est.minutes}분",
+        "오늘 ${Dur.label(est.minutes)}",
         "주행비 약 ${"%,d".format(FuelCost.won(est.km, est))}원",
         usual?.let { u ->
             val d = est.minutes - u.min
             when {
-                d >= 3 -> "평소보다 ${d}분 더"
-                d <= -3 -> "평소보다 ${-d}분 덜"
+                d >= 3 -> "평소보다 ${Dur.label(d)} 더"
+                d <= -3 -> "평소보다 ${Dur.label(-d)} 덜"
                 else -> null
             }
         },

@@ -159,7 +159,7 @@ private fun TripRow(t: Trip) {
             if (!t.destination.isNullOrBlank()) Txt(fmt(t.startMs), T.Sub, maxLines = 1)
         }
         Column(horizontalAlignment = Alignment.End, verticalArrangement = Arrangement.spacedBy(6.dp)) {
-            Txt("${TripText.km(t.distanceKm)}km · " + if (t.durationMin < 1) "1분 미만" else "${t.durationMin}분", T.Body, maxLines = 1)
+            Txt("${TripText.km(t.distanceKm)}km · " + if (t.durationMin < 1) "1분 미만" else Dur.label(t.durationMin), T.Body, maxLines = 1)
             if (t.night || t.long) Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 if (t.night) Pill("야간")
                 if (t.long) Pill("장거리")

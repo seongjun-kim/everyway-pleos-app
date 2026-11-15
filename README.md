@@ -32,6 +32,21 @@ Pleos Connect Emulator v2.1.0 캡처(2026-11-15), 아래 순서로 쓰입니다.
 | 6. 방법을 고르면 번호 단계(서울 택시는 `02-120 열기`로 전화 앱) | ![다음 걸음](docs/screens/06_today_steps.png) |
 | 7. 더 보기 → 기록: 오늘 이동 기록(날짜별)과 운행 기록 | ![기록](docs/screens/08_history.png) |
 | 8. 운전자 구분은 차량 상단의 프로필(운전자·발레 모드·프로필 설정)을 따름 | ![차량 프로필](docs/screens/09_vehicle_profile.png) |
+| 9. 서울 택시의 `02-120 열기`는 전화 앱 다이얼 화면을 엽니다. 블루투스 휴대폰이 없으면 연결 안내가 나옵니다 | ![다이얼 전환](docs/screens/10_dialer_handoff.png) |
+
+### 전화 연결 조건(블루투스)
+
+앱이 하는 일은 전화 앱의 다이얼 화면을 번호가 입력된 채로 여는 것까지이고, 거는 것은 운전자가 차량 전화 앱의 통화 버튼으로 합니다. 앱에는 전화 걸기 권한이 없습니다.
+
+| 항목 | 내용 | 근거 |
+| --- | --- | --- |
+| 앱이 쓰는 방식 | `ACTION_DIAL` + `tel:` (권한 불필요, `CALL_PHONE` 없음) | `TodayScreen.kt` |
+| `tel:` 을 받는 앱 | Pleos 전화 앱(`ai.umos.callandmessage`) 하나가 DIAL·`tel` 을 처리 | Pleos 에뮬레이터에서 `cmd package query-activities` 로 확인 |
+| 그 앱의 통화 자격 | `CALL_PHONE`·`BLUETOOTH_CONNECT` 권한, 통화 서비스(`InCallService`) 등록, 시스템에 telecom·bluetooth 기능 있음 | 같은 에뮬레이터의 `dumpsys package` |
+| 블루투스 휴대폰이 연결된 차 | 다이얼 화면에 02120이 입력되어 열리고, 통화 버튼으로 연결한 휴대폰 회선을 통해 걸림 | 차량용 안드로이드 전화 앱이 블루투스 핸즈프리(HFP)로 연결된 휴대폰으로 통화한다는 [AOSP Car Dialer 문서](https://source.android.com/docs/automotive/hmi/dialer/tech_details) 구조 |
+| 연결된 휴대폰이 없을 때 | 전화 앱이 "기기를 연결하세요 / 블루투스 연결"을 안내 | 에뮬레이터 캡처([10](docs/screens/10_dialer_handoff.png)) |
+| 앱이 하지 않는 것 | 블루투스 연결 상태를 읽거나 대신 걸지 않음 | 코드 |
+| 확인하지 못한 것 | 실제 휴대폰을 페어링한 통화 연결(블루투스 휴대폰 없음), 차종별 전화 앱 차이 | 없음 |
 
 ## 문제와 해결
 | 시니어 운전자가 겪는 순간 | 이 앱의 답 |
@@ -98,7 +113,7 @@ release APK 는 `apk/team_app_release.apk` 로 자동 복사됩니다. 이름은
 | 빌드 | JDK 17, Gradle 8.11.1(래퍼), Android SDK 35. Pleos SDK(`ai.pleos.playground`)는 공개 Maven 저장소 `nexus-playground.pleos.ai` 에서 받음 |
 | 필요한 권한 | `pleos.car.permission.CAR_DRIVE`, `CAR_LIGHTS`, `NAVI_ROUTE`, `TTS_SERVICE` (매니페스트에 선언됨) |
 | 네트워크 | 앱 자체는 `INTERNET` 권한이 필요 없음. 경로 요청(`requestTrip`)은 Pleos 내비 서비스가 처리 |
-| 단위 테스트 | JVM 84개, `./gradlew testDebugUnitTest` |
+| 단위 테스트 | JVM 85개, `./gradlew testDebugUnitTest` |
 
 ## 주행 중 안전
 | 상황 | 동작 |
@@ -130,7 +145,7 @@ release APK 는 `apk/team_app_release.apk` 로 자동 복사됩니다. 이름은
 | NaviHelper 안내 시작 때 목적지 읽기 | 에뮬레이터에서 안내를 시작해 보지 못함(경로 요청은 확인) | 시뮬레이터 모드와 단위 테스트(`TripRecorderTest`, `CoordsTest`) |
 | 차량 프로필 전환 시 기록 분리 | 프로필을 바꿔 보지 못함 | Android 사용자별 앱 저장소를 따르는 구조 |
 | 음성(TTS) | 에뮬레이터에서 지원 확인 못 함 | 지원 전까지 Android TTS 사용 |
-| 실제 통화 | 에뮬레이터에 블루투스 기기 없음 | 전화를 걸지 않고 번호만 입력하는 방식 |
+| 블루투스 휴대폰 연결 후 실제 통화 | 에뮬레이터에 블루투스 휴대폰 없음 | 구조상 가능(아래 [전화 연결 조건](#전화-연결-조건블루투스))하나 실제 통화는 못 해 봄 |
 | 실차·장시간 구동 | 실차 없음 | 없음 |
 | 좁은 화면·다른 해상도 | 한 가지 크기만 봄 | 없음 |
 
@@ -187,7 +202,7 @@ release APK 는 `apk/team_app_release.apk` 로 자동 복사됩니다. 이름은
 | `TaxiFareTest` · `TransitFareTest` | 11 · 4 | 택시(심야·시계외·정체), 주행비(휘발유·전기), 버스·지하철·셔클 요금과 시간 |
 | `CoordsTest` · `PhraseGuardTest` · `RulesTest` | 3 · 4 · 3 | 목적지 좌표, 금지어 소스 스캔, 임계값 고정 |
 
-JVM 단위 테스트 84개가 통과합니다. 화면(Compose)과 Pleos 연동은 자동 테스트가 없고 위의 에뮬레이터 확인으로 대신했습니다.
+JVM 단위 테스트 85개가 통과합니다. 화면(Compose)과 Pleos 연동은 자동 테스트가 없고 위의 에뮬레이터 확인으로 대신했습니다.
 
 ## 한계와 다음 단계
 | 현재 한계 | 다음 단계 |
