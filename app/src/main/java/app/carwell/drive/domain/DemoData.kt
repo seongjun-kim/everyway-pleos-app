@@ -18,7 +18,7 @@ object DemoData {
 
     /** 은퇴를 앞둔 60대 초반 운전자의 가상 행선지. 거리는 장소마다 고정(평소 길 계산에 쓰임), 이름은 모두 가상이다. */
     private data class Spot(val name: String, val km: Double, val lat: Double, val lon: Double)
-    private val HOSPITAL = Spot("종합병원", 24.0, 37.583, 127.1325)
+    private val HOSPITAL = Spot("종합병원", 24.0, 37.5759, 126.9769)
     private val OFFICE = Spot("사무실", 18.0, 37.4961, 127.2198)
     private val GOLF = Spot("골프연습장", 13.0, 37.3964, 127.2109)
     private val CHURCH = Spot("교회", 9.0, 37.3565, 127.1355)
@@ -62,7 +62,7 @@ object DemoData {
                     else -> (if (recent) NEAR_DAY_RECENT else NEAR_DAY_BASE)[daySeen++ % (if (recent) NEAR_DAY_RECENT else NEAR_DAY_BASE).size]
                 }
                 val km = spot.km + (i % 3 - 1) * 0.4
-                val min = (km * 1.6).toInt() + 6
+                val min = (km * 1.3).toInt() + 4
                 val end = start.plusMinutes(min.toLong())
                 val dest = spot.name
                 val signals = 2 + (i % 5)

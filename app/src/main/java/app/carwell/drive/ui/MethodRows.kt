@@ -22,14 +22,17 @@ internal object MethodRows {
             band?.let { "${if (night) "밤에는" else "낮에는"} 평소 ${it.first}분" },
         ).joinToString(" · ").ifBlank { null }
         fun line(vararg p: String?) = p.filterNotNull().joinToString(" · ").ifBlank { null }
-        val transit = if (km != null && driveMin != null && destRegion != null) line(
-            TransitFare.minutesLabel(TransitFare.transitMinutes(driveMin)),
-            "약 ${won(TransitFare.transitWon(km, destRegion))}",
-        ) else null
-        val drt = if (driveMin != null && destRegion != null) line(
-            TransitFare.minutesLabel(TransitFare.drtMinutes(driveMin)),
-            "약 ${won(TransitFare.drtWon(destRegion))}",
-        ) else null
+        // 대중교통·셔클은 도로 정체의 영향을 덜 받는다고 보고, 평소(정체가 덜한 날)와 오늘 중 짧은 쪽을 기준으로 어림한다.
+        val baseMin = if (driveMin != null && t != null) minOf(driveMin, t.min) else driveMin
+        fun faster(min: Int) = driveMin?.takeIf { it - min >= 5 }?.let { "직접 운전보다 ${it - min}분 빨라요" }
+        val transit = if (km != null && baseMin != null && destRegion != null) {
+            val m = TransitFare.transitMinutes(baseMin)
+            line(TransitFare.minutesLabel(m), "약 ${won(TransitFare.transitWon(km, destRegion))}", faster(m))
+        } else null
+        val drt = if (baseMin != null && destRegion != null) {
+            val m = TransitFare.drtMinutes(baseMin)
+            line(TransitFare.minutesLabel(m), "약 ${won(TransitFare.drtWon(destRegion))}", faster(m))
+        } else null
         val taxi = line(
             driveMin?.let { "약 ${it}분" },
             fare?.let { "약 ${RouteInfo.wonLabel(it.won)}" + if (it.night || it.outside) " (할증 포함)" else "" },
