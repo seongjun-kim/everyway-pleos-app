@@ -105,7 +105,6 @@ fun TodayScreen(ui: UiModel, c: AppController) {
 }
 
 private fun goText(alt: Alternative) = when (alt) {
-    Alternative.FAMILY -> "가족이 데려다줘요"
     Alternative.TAXI -> "택시로 가요"
     Alternative.TRANSIT -> "버스·지하철로 가요"
     Alternative.DEMAND_BUS -> "셔클로 가요"

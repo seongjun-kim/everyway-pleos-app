@@ -49,7 +49,7 @@ class RouteInfoTest {
     @Test fun 운행_기록이_없어도_전화_안내는_나온다() {
         val line = RouteInfo.infoLine(Alternative.TAXI, null)!!
         assertTrue(line.contains("02-120 → 6번") && !line.contains("평소"))
-        assertNull(RouteInfo.infoLine(Alternative.FAMILY, null))
+        assertNull(RouteInfo.infoLine(Alternative.TRANSIT, null))
         assertNull(RouteInfo.infoLine(Alternative.SELF, null))
     }
 

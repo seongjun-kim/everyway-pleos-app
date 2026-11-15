@@ -96,7 +96,7 @@ object DemoData {
         fun at(daysAgo: Int, hour: Int) = ZonedDateTime.of(today.minusDays(daysAgo.toLong()), java.time.LocalTime.of(hour, 10), zone).toInstant().toEpochMilli()
         val choices = listOf(
             MoveChoice(at(14, 9), placeKey(HOSPITAL.name), HOSPITAL.name, Alternative.TAXI, demo = true),
-            MoveChoice(at(9, 20), placeKey(HOMETOWN.name), HOMETOWN.name, Alternative.FAMILY, demo = true),
+            MoveChoice(at(9, 20), placeKey(HOMETOWN.name), HOMETOWN.name, Alternative.TRANSIT, demo = true),
             MoveChoice(at(5, 9), placeKey(HOSPITAL.name), HOSPITAL.name, Alternative.TAXI, demo = true),
             MoveChoice(at(5, 18), placeKey(HOSPITAL.name), HOSPITAL.name, Alternative.SELF, demo = true),
         )

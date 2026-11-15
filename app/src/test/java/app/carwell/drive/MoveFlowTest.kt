@@ -13,14 +13,14 @@ class MoveFlowTest {
         var d = AppData()
         d = DataOps.addChoice(d, "종합병원", "종합병원", Alternative.TAXI, now)
         d = DataOps.addChoice(d, "종합병원", "종합병원", Alternative.SELF, now + 3_600_000)
-        d = DataOps.addChoice(d, "시골 본가", "시골 본가", Alternative.FAMILY, now + 7_200_000)
+        d = DataOps.addChoice(d, "시골 본가", "시골 본가", Alternative.TRANSIT, now + 7_200_000)
         assertEquals(3, d.choices.size)
         assertEquals(1, MoveFlow.byDay(d.choices, ZONE).size)
         assertEquals(3, MoveFlow.byDay(d.choices, ZONE).single().second.size)
     }
 
     @Test fun `날짜별로 묶이고 최신 날짜가 먼저`() {
-        val list = listOf(choice(5, 9, Alternative.TAXI), choice(5, 18, Alternative.SELF), choice(1, 9, Alternative.FAMILY))
+        val list = listOf(choice(5, 9, Alternative.TAXI), choice(5, 18, Alternative.SELF), choice(1, 9, Alternative.TRANSIT))
         val days = MoveFlow.byDay(list, ZONE)
         assertEquals(listOf("11월 14일", "11월 10일"), days.map { it.first })
         assertEquals(2, days[1].second.size)

@@ -58,7 +58,6 @@ fun placeKey(name: String): String = name.trim().lowercase().replace(Regex("\\s+
 /** 이동 대안. 호출·결제 같은 외부 연동은 없고, 본인이 고른 값만 저장한다. */
 @Serializable
 enum class Alternative(val label: String) {
-    FAMILY("가족이 데려다줌"),
     TAXI("택시"),
     TRANSIT("버스·지하철"),
     DEMAND_BUS("셔클"),

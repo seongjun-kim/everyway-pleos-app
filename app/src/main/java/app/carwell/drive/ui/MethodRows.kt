@@ -36,7 +36,7 @@ internal object MethodRows {
             if (seoul) "02-120 → 6번" else null,
         )
         return mapOf(
-            Alternative.SELF to self, Alternative.FAMILY to null, Alternative.TAXI to taxi,
+            Alternative.SELF to self, Alternative.TAXI to taxi,
             Alternative.TRANSIT to transit, Alternative.DEMAND_BUS to drt,
         )
     }

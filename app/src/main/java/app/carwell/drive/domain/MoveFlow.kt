@@ -24,7 +24,6 @@ object MoveFlow {
         Alternative.TAXI -> if (!seoul) listOf("택시 호출 앱이나 지역 콜택시 번호로 불러요", "출발지와 목적지를 말해요") else listOf("전화 앱에서 02-120을 걸어요", "안내 음성이 나오면 6번을 눌러요", "출발지와 목적지를 말하면 차량 번호가 문자로 와요")
         Alternative.DEMAND_BUS -> listOf("셔클은 부르면 오는 수요응답 버스예요, 호출 방법은 지역마다 달라요", "사는 동네 지자체 안내에서 전화 호출 번호를 확인해요")
         Alternative.TRANSIT -> listOf("지도 앱에서 버스·지하철 길을 확인해요")
-        Alternative.FAMILY -> listOf("가족에게 데려다 달라고 연락해요")
         Alternative.SELF -> listOf("평소 길로 안전하게 다녀오세요")
     }
 
